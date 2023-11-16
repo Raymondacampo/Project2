@@ -13,7 +13,10 @@ class CreateProduct(forms.Form):
     image = forms.URLField()
 
 def index(request):
-    return render(request, "auctions/index.html")
+    items = Product.objects.all()
+    return render(request, "auctions/index.html", {
+        "items":items
+    })
 
 
 def create(request):
@@ -29,6 +32,8 @@ def create(request):
     return render(request, "auctions/create.html", {
         "form":form
     })
+
+
 
 
 

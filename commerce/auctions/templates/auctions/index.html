@@ -2,6 +2,8 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-
+        {% for i in items %}
+            <img src="{{i.image}}" height="150px"> {{i.name}}, {{i.description}}, {{i.price}}
+        {% endfor %}
     TODO
 {% endblock %}
