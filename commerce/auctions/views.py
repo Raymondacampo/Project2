@@ -33,7 +33,11 @@ def create(request):
         "form":form
     })
 
-
+def item(request, item_id):
+    item = Product.objects.get(pk=item_id)
+    return render(request, "auctions/item.html", {
+        "item":item
+    })
 
 
 
