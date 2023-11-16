@@ -18,6 +18,6 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     active = models.BooleanField(default=True)
-    price = models.IntegerField()
+    price = models.IntegerField(default=0)
     winner = models.ForeignKey(Bid, on_delete=models.CASCADE, null=True, related_name="product")
     comments = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name="product")
