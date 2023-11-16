@@ -19,5 +19,6 @@ class Product(models.Model):
     description = models.CharField(max_length=300)
     active = models.BooleanField(default=True)
     price = models.IntegerField()
+    image = models.URLField(null=True)
     winner = models.ForeignKey(Bid, on_delete=models.CASCADE, null=True, related_name="product")
     comments = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name="product")
