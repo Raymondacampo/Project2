@@ -33,12 +33,19 @@ def create(request):
         "form":form
     })
 
+
 def item(request, item_id):
     item = Product.objects.get(pk=item_id)
     return render(request, "auctions/item.html", {
         "item":item
     })
 
+
+def watchlist(request, item_id):
+    user = request.user
+    product = Product.objects.get(pk=item_id)
+    product.watchlist.add(user)
+    return HttpResponseRedirect(reverse('index'))
 
 
 

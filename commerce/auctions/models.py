@@ -20,5 +20,9 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
     price = models.IntegerField(default=0)
     image = models.ImageField(upload_to='images', null=True)
-    winner = models.ForeignKey(Bid, on_delete=models.CASCADE, null=True, related_name="product")
-    comments = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, related_name="product")
+    winner = models.ForeignKey(Bid, on_delete=models.SET_NULL, null=True, blank=True, related_name="product")
+    comments = models.ManyToManyField(Comment, blank=True, related_name="product")
+    watchlist = models.ManyToManyField(User, blank=True, related_name="watchlist")
+
+    def __str__(self):
+        return f"{self.name}"
