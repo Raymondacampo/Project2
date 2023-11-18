@@ -1,7 +1,21 @@
 {% extends "auctions/layout.html" %}
+
 {% block body %}
+    <h2>Active Listings</h2>
+    <div class="item_container" >
+        {% for i in categories %}
+            {% if i.active == True %}
+            
+            <div>
+            <a href="{% url 'item' i.id%}">
+                <div id="item_img"><img src="{{i.image}}" class="index_img"></div>
+                <div class="title">{{i.name}}</div>
+                <div>Starting price: <span class="price">{{i.price}}$</span></div> 
+            </a>
+            <div class="add"><a href="{% url 'watchlist' i.id%}"class="watchlist">Add to watchlist</a></div> 
+            </div>      
+            {% endif %}
+        {% endfor %}
+    </div>
     
-    {% for c in categories %}
-        {{c}}
-    {% endfor %}
 {% endblock %}
