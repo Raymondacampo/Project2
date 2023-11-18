@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from .models import User, Bid, Comment, Product
+from django.contrib.auth.decorators import login_required
 
 class CreateProduct(forms.Form):
     name = forms.CharField(max_length=50, min_length=5)
@@ -22,6 +23,7 @@ def index(request):
     })
 
 
+@login_required
 def create(request):
     user = request.user
     if request.method == 'POST':
@@ -40,27 +42,37 @@ def create(request):
 def item(request, item_id):
     form = BidProduct()
     item = Product.objects.get(pk=item_id)
+    user = request.user
+
     if item.winner != None:
         bid = Bid.objects.get(pk=item.winner.id)
         value = bid.bidamount + 1
     else:
         bid = "No bets yet"
         value = item.price
-    return render(request, "auctions/item.html", {
-        "item":item,
-        "form":form,
-        "bid":bid,
-        "value":value
-    })
+        if item.owner != user:
+            return render(request, "auctions/item.html", {
+                "item":item,
+                "form":form,
+                "bid":bid,
+                "value":value
+            })
+        else:
+            return render(request, "auctions/myitem.html", {
+                "item":item,
+                "form":form,
+                "bid":bid,
+                "value":value
+            })
 
-
+@login_required
 def watchlist(request, item_id):
     user = request.user
     product = Product.objects.get(pk=item_id)
     product.watchlist.add(user)
     return HttpResponseRedirect(reverse('index'))
 
-
+@login_required
 def bid(request, item_id):
     user = request.user
     if request.method == 'POST':
@@ -73,7 +85,12 @@ def bid(request, item_id):
         return HttpResponseRedirect(reverse('index'))
 
 
-            
+def close(request, item_id):
+    item = Product.objects.get(pk=item_id)  
+    item.active = False
+    item.save()
+    return HttpResponse(f"pene{item.active}")
+
 
 
 
