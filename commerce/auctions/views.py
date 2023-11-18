@@ -68,11 +68,19 @@ def item(request, item_id):
             })
 
 @login_required
-def watchlist(request, item_id):
+def add_watchlist(request, item_id):
     user = request.user
     product = Product.objects.get(pk=item_id)
     product.watchlist.add(user)
-    return HttpResponseRedirect(reverse('index'))
+    return render(request, "auctions/watchlist.html")
+
+def view_watchlist(request):
+    user = request.user
+    u = User.objects.get(pk=user.id)
+    items = u.watchlist.all()
+    return render(request, "auctions/watchlist.html", {
+        "items": items
+    })
 
 @login_required
 def bid(request, item_id):
