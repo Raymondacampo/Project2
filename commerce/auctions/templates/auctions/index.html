@@ -8,9 +8,9 @@
             
             <div>
             <a href="{% url 'item' i.id%}">
-                <div class="item_img"><img src="{{i.image}}" height="150px"></div>
+                <div id="item_img"><img src="{{i.image}}" class="index_img"></div>
                 <div class="title">{{i.name}}</div>
-                <div>Starting price: <span class="price">{{i.price}}</span></div> 
+                <div>Starting price: <span class="price">{{i.price}}$</span></div> 
             </a>
             </div>      
             {% endif %}

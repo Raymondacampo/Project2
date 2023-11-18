@@ -8,6 +8,9 @@ a:hover{
     text-decoration: none;
 }
 
+img{
+    height: 400px;
+}
 
 .item_container{
     display: flex;
@@ -29,7 +32,11 @@ a:hover{
     color: black;
 }
 
-.item_img{
+.index_img{
+    height: 150px;
+}
+
+#item_img{
     width: 200px;
     margin: auto;
 }
@@ -45,4 +52,30 @@ a:hover{
     background: rgba(217, 217, 217, .4);
     padding: 4px;
     border-radius: 5px;
+}
+
+/* ITEM VIEW */
+
+.itm_img{
+
+    float: left;
+    padding-right: 25px;
+}
+
+.itm_cont{
+    height: 400px;
+    padding-left: 75px ;
+
+}
+
+.itm_cont > div > div {
+    margin: 8px auto;
+    padding: 15px;
+}
+
+.watchlist{
+    background-color: blue;
+    padding: 10px;
+    border-radius: 5px;
+    color: beige;
 }

@@ -14,7 +14,7 @@ class CreateProduct(forms.Form):
     image = forms.URLField()
 
 class Comment_form(forms.Form):
-    comment = forms.CharField(max_length=300)
+    comment = forms.CharField(max_length=300, label="Add a comment: ")
 
 def index(request):
     items = Product.objects.all()
@@ -41,7 +41,6 @@ def create(request):
 
 
 def item(request, item_id):
-    form = Comment_form()
     item = Product.objects.get(pk=item_id)
     user = request.user
     comments = item.comments.all()
@@ -51,22 +50,21 @@ def item(request, item_id):
     else:
         bid = "No bets yet"
         value = item.price
-        if item.owner != user:
-            return render(request, "auctions/item.html", {
-                "item":item,
-                "form":form,
-                "bid":bid,
-                "value":value,
-                "coments":comments
-            })
-        else:
-            return render(request, "auctions/myitem.html", {
-                "item":item,
-                "form":form,
-                "bid":bid,
-                "value":value,
-                "coments":comments
-            })
+        
+    if item.owner != user:
+        return render(request, "auctions/item.html", {
+            "item":item,
+            "bid":bid,
+            "value":value + 1,
+            "coments":comments
+        })
+    else:
+        return render(request, "auctions/item.html", {
+            "item":item,
+            "bid":bid,
+            "value":value + 1,
+            "coments":comments
+        })
 
 @login_required
 def add_watchlist(request, item_id):

@@ -2,38 +2,58 @@
 
 {% block body %}
 
-    <img src="{{item.image}}" height="150px"> {{item.name}}, {{item.description}}, {{item.price}}
-    <a href="{% url 'watchlist' item.id%}">add to watchlist</a>
-    {% if bid != "No bets yet" %}
-        highest bid: {{bid.user}} amount: {{bid.bidamount}}
-    {% else %}
-        highest bid: {{bid}}
-    {% endif %}
+    <div class="itm_img">
+        <div>
+            <img src="{{item.image}}" height="10px"> 
+        </div>
+    </div>
+    
+    <div class="itm_cont">
+        <div>
+            <div><h1>{{item.name}}</h1></div>
+            <div>{{item.description}}</div>
+            <div><a href="{% url 'watchlist' item.id%}" class="watchlist">Add to watchlist</a></div>
+            <div>Starting price: <span class="price">{{item.price}}$</span></div>
+            <div>
+                {% if bid != "No bets yet" %}
+                    Highest bid: <span class="price">{{bid.bidamount}}$</span> 
+                {% else %}
+                    Highest bid: <span class="price">{{bid}}</span>
+                {% endif %}
+            </div>
+            <div>
+                {% if item.active %}
+                    <form action="{% url 'bid' item.id%}" method="post">
+                    {% csrf_token %}
+                        {% if bid != "No bets yet" %}
+                            <input type="number" min="{{value}}"name="amount">
+                        {% else %}
+                            <input type="number" min="{{value}}" name="amount" >
+                        {% endif %}
+                        
+                        <input type="submit" value="Bid!" class="watchlist">
+                        
+                    </form>
+                {% else %}
+                    <h1>The winner is {{bid.user}}</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     <br>
-    {% if item.active %}
-        <form action="{% url 'bid' item.id%}" method="post">
-        {% csrf_token %}
-            {% if bid != "No bets yet" %}
-                <input type="number" min="{{value}}"name="amount">
-            {% else %}
-                <input type="number" min="{{value}}" name="amount" >
-            {% endif %}
-            
-            <input type="submit" act>
-            
-        </form>
-    {% else %}
-        <h1>The winner is {{bid.user}}</h1>
-    {% endif %}
+    <hr>
     <form action="{% url 'comment' item.id %}" method="post">
         {% csrf_token %}
-        Comment: {{form}}
-        <input type="submit" value="Post">
+        <h3>Add a comment:</h3>
+        <textarea name="comment" id="" cols="60" rows="3"></textarea><br>
+        <input type="submit" value="Post" class="watchlist">
     </form>
     <br>
-    <br>
-    <br>
+    <h4>Comments</h4>
+    <hr>
     {% for c in coments %}
+        <h6>{{c.user}}</h6>
         {{c.comment}}
+        <hr>
     {% endfor %}
 {% endblock %} 
