@@ -25,4 +25,4 @@ class Product(models.Model):
     watchlist = models.ManyToManyField(User, blank=True, related_name="watchlist")
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.id} {self.name}"

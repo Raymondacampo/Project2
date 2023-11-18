@@ -12,6 +12,9 @@ class CreateProduct(forms.Form):
     price = forms.IntegerField(min_value=0)
     image = forms.URLField()
 
+class BidProduct(forms.Form):
+    amount = forms.IntegerField(min_value=0, label="Bid amount")
+
 def index(request):
     items = Product.objects.all()
     return render(request, "auctions/index.html", {
@@ -35,9 +38,19 @@ def create(request):
 
 
 def item(request, item_id):
+    form = BidProduct()
     item = Product.objects.get(pk=item_id)
+    if item.winner != None:
+        bid = Bid.objects.get(pk=item.winner.id)
+        value = bid.bidamount + 1
+    else:
+        bid = "No bets yet"
+        value = item.price
     return render(request, "auctions/item.html", {
-        "item":item
+        "item":item,
+        "form":form,
+        "bid":bid,
+        "value":value
     })
 
 
@@ -48,6 +61,19 @@ def watchlist(request, item_id):
     return HttpResponseRedirect(reverse('index'))
 
 
+def bid(request, item_id):
+    user = request.user
+    if request.method == 'POST':
+        item = Product.objects.get(pk=item_id)
+        amount = request.POST['amount']
+        apuesta = Bid.objects.create(user = user, bidamount = amount)
+        apuesta.save()
+        item.winner = apuesta
+        item.save()
+        return HttpResponseRedirect(reverse('index'))
+
+
+            
 
 
 
