@@ -1,3 +1,48 @@
 body {
     padding: 10px;
 }
+
+a:hover{
+    background-color: rgb(229, 229, 229);
+    color: black;
+    text-decoration: none;
+}
+
+
+.item_container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item_container > div{
+    width: 250px ;
+    max-width: 275px;
+    height: auto;
+    border-radius: 15px;
+    border: 1px;
+    border-style: outset;
+    margin: 0px 10px 0px 10px;
+    padding: 10px 10px;
+}
+
+.item_container > div > a {
+    color: black;
+}
+
+.item_img{
+    width: 200px;
+    margin: auto;
+}
+
+.title{
+    color: black;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+}
+
+.price{
+    background: rgba(217, 217, 217, .4);
+    padding: 4px;
+    border-radius: 5px;
+}

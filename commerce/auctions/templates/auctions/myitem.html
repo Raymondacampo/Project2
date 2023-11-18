@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <img src="{{item.image}}" height="150px"> {{item.name}}, {{item.description}}, {{item.price}}
+    <a href="{% url 'watchlist' item.id%}">add to watchlist</a>
+    {% if bid != "No bets yet" %}
+    highest bid: {{bid.user}} amount: {{bid.bidamount}}
+    {% else %}
+        highest bid: {{bid}}
+    {% endif %}
+    <a href="{% url 'close' item.id%}">Close Auction</a>
+
+    <form action="{% url 'comment' item.id %}" method="post">
+    {% csrf_token %}
+        Comment: {{form}}
+        <input type="submit" value="Post">
+    </form>
+    <br>
+    <br>
+    <br>
+    {% for c in coments %}
+        {{c.user}}<br>
+        {{c.comment}}
+    {% endfor %}
+{% endblock %}

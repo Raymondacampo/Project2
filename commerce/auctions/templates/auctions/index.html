@@ -2,12 +2,19 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    <div class="item_container" >
         {% for i in items %}
             {% if i.active == True %}
-                <img src="{{i.image}}" height="150px"> <a href="{% url 'item' i.id%}">{{i.name}}</a>, {{i.description}}, {{i.price}}
-            {% else %}
-                <img src="{{i.image}}" height="150px"> <a href="{% url 'item' i.id%}">{{i.name}}</a>, {{i.description}}, {{i.price}}, SOLD
+            
+            <div>
+            <a href="{% url 'item' i.id%}">
+                <div class="item_img"><img src="{{i.image}}" height="150px"></div>
+                <div class="title">{{i.name}}</div>
+                <div>Starting price: <span class="price">{{i.price}}</span></div> 
+            </a>
+            </div>      
             {% endif %}
         {% endfor %}
-    TODO
+    </div>
+    
 {% endblock %}
