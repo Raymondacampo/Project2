@@ -13,8 +13,8 @@ class CreateProduct(forms.Form):
     price = forms.IntegerField(min_value=0)
     image = forms.URLField()
 
-class BidProduct(forms.Form):
-    amount = forms.IntegerField(min_value=0, label="Bid amount")
+class Comment_form(forms.Form):
+    comment = forms.CharField(max_length=300)
 
 def index(request):
     items = Product.objects.all()
@@ -40,10 +40,10 @@ def create(request):
 
 
 def item(request, item_id):
-    form = BidProduct()
+    form = Comment_form()
     item = Product.objects.get(pk=item_id)
     user = request.user
-
+    comments = item.comments.all()
     if item.winner != None:
         bid = Bid.objects.get(pk=item.winner.id)
         value = bid.bidamount + 1
@@ -55,14 +55,16 @@ def item(request, item_id):
                 "item":item,
                 "form":form,
                 "bid":bid,
-                "value":value
+                "value":value,
+                "coments":comments
             })
         else:
             return render(request, "auctions/myitem.html", {
                 "item":item,
                 "form":form,
                 "bid":bid,
-                "value":value
+                "value":value,
+                "coments":comments
             })
 
 @login_required
@@ -89,7 +91,19 @@ def close(request, item_id):
     item = Product.objects.get(pk=item_id)  
     item.active = False
     item.save()
-    return HttpResponse(f"pene{item.active}")
+    return HttpResponseRedirect(reverse('item', args=[item_id]))
+
+
+def comment(request, item_id):
+    if request.method == 'POST':
+        c = request.POST['comment']
+        item = Product.objects.get(pk=item_id)
+        comment = Comment.objects.create(user = request.user, comment = c)
+        comment.save()
+        item.comments.add(comment)
+        return HttpResponseRedirect(reverse('item', args=[item_id]))
+
+
 
 
 
