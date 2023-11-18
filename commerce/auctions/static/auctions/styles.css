@@ -79,3 +79,16 @@ img{
     border-radius: 5px;
     color: beige;
 }
+
+/* watchlist */
+.remove{
+    padding-top: 22px;
+    margin: auto;
+    width: 90px;
+}
+
+.add{
+    padding-top: 22px;
+    margin: auto;
+    width: 150px;
+}

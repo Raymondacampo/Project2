@@ -64,15 +64,9 @@ def item(request, item_id):
             "bid":bid,
             "value":value + 1,
             "coments":comments
-        })
-
-@login_required
-def add_watchlist(request, item_id):
-    user = request.user
-    product = Product.objects.get(pk=item_id)
-    product.watchlist.add(user)
-    return render(request, "auctions/watchlist.html")
-
+        })\
+        
+        
 def view_watchlist(request):
     user = request.user
     u = User.objects.get(pk=user.id)
@@ -80,6 +74,20 @@ def view_watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "items": items
     })
+
+@login_required
+def add_watchlist(request, item_id):
+    user = request.user
+    product = Product.objects.get(pk=item_id)
+    product.watchlist.add(user)
+    return HttpResponseRedirect(reverse('view_watchlist'))
+
+def remove(request, item_id):
+    user = request.user
+    product = Product.objects.get(pk=item_id)
+    product.watchlist.remove(user)
+    return HttpResponseRedirect(reverse('view_watchlist'))
+
 
 @login_required
 def bid(request, item_id):

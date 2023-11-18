@@ -12,6 +12,7 @@
                 <div class="title">{{i.name}}</div>
                 <div>Starting price: <span class="price">{{i.price}}$</span></div> 
             </a>
+            <div class="add"><a href="{% url 'watchlist' i.id%}"class="watchlist">Add to watchlist</a></div> 
             </div>      
             {% endif %}
         {% endfor %}
