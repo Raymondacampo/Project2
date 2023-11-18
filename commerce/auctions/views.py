@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
-from .models import User, Bid, Comment, Product
+from .models import User, Bid, Comment, Product, Categorie
 from django.contrib.auth.decorators import login_required
 
 class CreateProduct(forms.Form):
@@ -18,6 +18,7 @@ class Comment_form(forms.Form):
 
 def index(request):
     items = Product.objects.all()
+
     return render(request, "auctions/index.html", {
         "items":items
     })
@@ -112,7 +113,18 @@ def comment(request, item_id):
         return HttpResponseRedirect(reverse('item', args=[item_id]))
 
 
+def categories(request):
+    categories = Categorie.objects.all()
+    return render(request, "auctions/categories.html", {
+        "categories":categories
+    })
 
+def category_items(request, categorie_id):
+    cat = Categorie.objects.get(pk=categorie_id)
+    items = cat.product.all()
+    return render(request, "auctions/itemcategories.html", {
+        "categories":items
+    })
 
 
 
