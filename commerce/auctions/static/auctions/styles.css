@@ -19,8 +19,7 @@ img{
 
 .item_container > div{
     width: 250px ;
-    max-width: 275px;
-    height: auto;
+    height: 300px;
     border-radius: 15px;
     border: 1px;
     border-style: outset;
@@ -30,16 +29,33 @@ img{
 
 .item_container > div > a {
     color: black;
+    text-align: center;
+    }   
+.tpm{
+    height: 110px;
+}
+.child{
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
+#equal{
+    height: 230px;
+}
+
+
 .index_img{
-    height: 150px;
+    width: 125px;
+    margin: auto;
+    display: block;
+    height: 125px;
 }
 
 #item_img{
-    width: 200px;
-    margin: auto;
+    width: 225px;
 }
+
 
 .title{
     color: black;
@@ -56,16 +72,27 @@ img{
 
 /* ITEM VIEW */
 
-.itm_img{
+.sepereter{
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.itm_img{
+    width: auto;
     float: left;
     padding-right: 25px;
+    display: block;
+}
+
+.itm_img img{
+    display: flex;
 }
 
 .itm_cont{
+    float: right;
     height: 400px;
     padding-left: 75px ;
-
+    width: ;
 }
 
 .itm_cont > div > div {
@@ -91,4 +118,5 @@ img{
     padding-top: 22px;
     margin: auto;
     width: 150px;
+    margin-bottom: 0px;
 }

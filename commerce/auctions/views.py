@@ -27,16 +27,20 @@ def index(request):
 @login_required
 def create(request):
     user = request.user
+    categories = Categorie.objects.all()
     if request.method == 'POST':
         Item_name = request.POST['name']
         Item_description = request.POST['description']
         Item_price = request.POST['price']
         Item_image = request.POST['image']
-        Product.objects.create(owner = user, name = Item_name, description = Item_description, price = Item_price, image = Item_image)
+        Item_category = request.POST['category']
+        cat = Categorie.objects.get(categorie=Item_category)
+        Product.objects.create(owner = user, name = Item_name, description = Item_description, price = Item_price, image = Item_image, categorie = cat)
     
     form = CreateProduct()
     return render(request, "auctions/create.html", {
-        "form":form
+        "form":form,
+        "categories":categories
     })
 
 
@@ -59,12 +63,12 @@ def item(request, item_id):
             "coments":comments
         })
     else:
-        return render(request, "auctions/item.html", {
+        return render(request, "auctions/myitem.html", {
             "item":item,
             "bid":bid,
             "value":value + 1,
             "coments":comments
-        })\
+        })
         
         
 def view_watchlist(request):
@@ -86,7 +90,7 @@ def remove(request, item_id):
     user = request.user
     product = Product.objects.get(pk=item_id)
     product.watchlist.remove(user)
-    return HttpResponseRedirect(reverse('view_watchlist'))
+    return HttpResponseRedirect(reverse('item'))
 
 
 @login_required

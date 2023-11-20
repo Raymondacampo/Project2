@@ -4,7 +4,6 @@
     <h2>Your Watchlist</h2>
     <div class="item_container" >
         {% for i in items %}
-            {% if i.active == True %}
             
             <div>
             <a href="{% url 'item' i.id%}">
@@ -15,7 +14,6 @@
             <div class="remove"><a href="{% url 'remove' i.id%}"class="watchlist">Remove</a></div> 
             </div>    
               
-            {% endif %}
         {% endfor %}
     </div>
     

@@ -8,9 +8,15 @@
             
             <div>
             <a href="{% url 'item' i.id%}">
-                <div id="item_img"><img src="{{i.image}}" class="index_img"></div>
-                <div class="title">{{i.name}}</div>
-                <div>Starting price: <span class="price">{{i.price}}$</span></div> 
+                <div id="equal">
+                    <div id="item_img"><img src="{{i.image}}" class="index_img"></div>
+                    <div class="tpm">
+                        <div id="child">
+                            <div class="title">{{i.name}}</div>
+                            <div>Starting price: <span class="price">{{i.price}}$</span></div>
+                        </div>
+                    </div>
+                </div> 
             </a>
             <div class="add"><a href="{% url 'watchlist' i.id%}"class="watchlist">Add to watchlist</a></div> 
             </div>      

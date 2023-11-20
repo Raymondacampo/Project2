@@ -1,53 +1,63 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-    <div class="itm_img">
-        <div>
-            <img src="{{item.image}}" height="10px"> 
-        </div>
-    </div>
-    
-    <div class="itm_cont">
-        <div>
-            <div><h1>{{item.name}}</h1></div>
-            <div>{{item.description}}</div>
-            <div><a href="{% url 'watchlist' item.id%}" class="watchlist">Add to watchlist</a></div>
-            <div>Starting price: <span class="price">{{item.price}}$</span></div>
+    <div class="sepereter">
+        <div class="itm_img">
             <div>
-                {% if bid != "No bets yet" %}
-                    Highest bid: <span class="price">{{bid.bidamount}}$</span> 
-                {% else %}
-                    Highest bid: <span class="price">{{bid}}</span>
-                {% endif %}
+                <img src="{{item.image}}" height="10px"> 
             </div>
+        </div>
+        
+
+
+        <div class="itm_cont">
             <div>
-                {% if item.active %}
-                    <form action="{% url 'bid' item.id%}" method="post">
-                    {% csrf_token %}
-                        {% if bid != "No bets yet" %}
-                            <input type="number" min="{{value}}"name="amount">
-                        {% else %}
-                            <input type="number" min="{{value}}" name="amount" >
+                <div><h1>{{item.name}}</h1></div>
+                <div>{{item.description}}</div>
+                {% if item.active == True %}
+                <div><a href="{% url 'watchlist' item.id%}" class="watchlist">Add to watchlist</a></div>
+                <div>Starting price: <span class="price">{{item.price}}$</span></div>
+                <div>
+                    {% if bid != "No bets yet" %}
+                        Highest bid: <span class="price">{{bid.bidamount}}$</span> 
+                    {% else %}
+                        Highest bid: <span class="price">{{bid}}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    
+                        <form action="{% url 'bid' item.id%}" method="post">
+                        {% csrf_token %}
+                            {% if bid != "No bets yet" %}
+                                <input type="number" min="{{value}}"name="amount">
+                            {% else %}
+                                <input type="number" min="{{value}}" name="amount" >
+                            {% endif %}
+                            
+                            <input type="submit" value="Bid!" class="watchlist">
+                            
+                        </form>
+                    {% else %}
+                    {% if bid.user == user %}
+                    <h1>You won the Auction!</h1>
+                    {% else %}
+                        <h1>The winner is {{bid.user}}</h1>
                         {% endif %}
-                        
-                        <input type="submit" value="Bid!" class="watchlist">
-                        
-                    </form>
-                {% else %}
-                    <h1>The winner is {{bid.user}}</h1>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
     <br>
     <hr>
+    {% if item.active == True %}
     <form action="{% url 'comment' item.id %}" method="post">
         {% csrf_token %}
         <h3>Add a comment:</h3>
         <textarea name="comment" id="" cols="60" rows="3"></textarea><br>
         <input type="submit" value="Post" class="watchlist">
     </form>
+    {% endif %}
     <br>
     <h4>Comments</h4>
     <hr>
